@@ -1,0 +1,16 @@
+import urllib2, time 
+from BeautifulSoup import BeautifulSoup
+file = open("createTextFile", "w")
+import csv
+with open('theCSVFile', 'rb') as f:
+	reader = csv.reader(f)
+	for row in reader:
+		try:
+			page = urllib2.urlopen(row[0])
+			soup = BeautifulSoup(page)
+			title = soup.title.renderContents()
+			file.write(row[0]+","+title+"\n")
+			print row[0]+","+title+"\n"
+		except Exception, e:
+			file.write(row[0]+","+"Not found"+"\n")
+print "Ended"
