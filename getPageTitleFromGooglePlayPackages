@@ -1,16 +1,23 @@
 import urllib2, time 
-from BeautifulSoup import BeautifulSoup
-file = open("createTextFile", "w")
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    from BeautifulSoup import BeautifulSoup
+# from BeautifulSoup import BeautifulSoup
+file = open("catEcompDosPackages.txt", "w")
 import csv
-with open('theCSVFile', 'rb') as f:
+with open('/home/efrem/Downloads/urls.txt', 'rb') as f:
 	reader = csv.reader(f)
 	for row in reader:
 		try:
-			page = urllib2.urlopen(row[0])
+			page = urllib2.urlopen('https://play.google.com/store/apps/details?id=' + row[0])
 			soup = BeautifulSoup(page)
-			title = soup.title.renderContents()
-			file.write(row[0]+","+title+"\n")
-			print row[0]+","+title+"\n"
-		except Exception, e:
-			file.write(row[0]+","+"Not found"+"\n")
+			name = soup.find(itemprop="name").get_text().encode('utf-8')
+			company = soup.find("span",itemprop="name").get_text().encode('utf-8')
+			category = soup.find("span",itemprop="genre").get_text().encode('utf-8')
+			file.write(row[0] + ";" + name + ";" + company + "; " + category + "\n")
+			print row[0] + ";" + name + ";" + company + "; " + category + "\n"
+		except:
+		 	file.write(row[0]+","+"Not found"+"\n")
+		 	print 'Not Found'
 print "Ended"
