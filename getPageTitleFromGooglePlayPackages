@@ -3,7 +3,6 @@ try:
     from bs4 import BeautifulSoup
 except ImportError:
     from BeautifulSoup import BeautifulSoup
-# from BeautifulSoup import BeautifulSoup
 file = open("FILE_CREATE", "w")
 import csv
 with open('CSV_FILE', 'rb') as f:
