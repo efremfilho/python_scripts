@@ -55,13 +55,13 @@ for i in range(10,1000,6):
 
 # Exemplo API Externa - https://medium.com/quick-code/absolute-beginners-guide-to-slaying-apis-using-python-7b380dc82236 
 # Para o Google Maps API - https://console.developers.google.com/apis/credentials?project=universidade-agora
-request = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=AIzaSyCG828zfyvYvUx-FmMx6R_JRNLcH_9uvo0')
+request = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=[API-KEY]')
 data = request.json()
 
 for place in data['results']:
     print(place['vicinity'])
     
-"""request = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=AIzaSyCG828zfyvYvUx-FmMx6R_JRNLcH_9uvo0')
+"""request = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=[API-KEY]')
 data = request.json()
 
 print(data)
