@@ -1,92 +1,105 @@
+# Importação de bibliotecas:
+# A biblioteca 'requests' é utilizada para realizar requisições HTTP.
+# A biblioteca 'json' é utilizada para manipular dados no formato JSON.
 import requests
 import json
 
-exemplo = 10000.51 #var exemplo = 10000.51;
+# ========================================
+# Demonstração dos principais tipos de variáveis em Python
+# ========================================
 
-print(exemplo) #Logger.log('o valor de exemplo é '+ exemplo)
+# Numéricos: inteiro e float
+num_int = 42              # Exemplo de número inteiro
+num_float = 3.1415        # Exemplo de número com ponto flutuante (float)
+print("Integer:", num_int, "| Tipo:", type(num_int))
+print("Float:", num_float, "| Tipo:", type(num_float))
 
-exemplo = 'efrem'
+# String: sequência de caracteres
+texto = "Hello, Python!"
+print("String:", texto, "| Tipo:", type(texto))
 
-exemplo = exemplo + 5 #diferente do GS
+# Booleanos: valores True ou False
+verdadeiro = True
+falso = False
+print("Boolean True:", verdadeiro, "| Tipo:", type(verdadeiro))
+print("Boolean False:", falso, "| Tipo:", type(falso))
 
-exemplo = 'efrem_'
+# Listas: coleção ordenada e mutável de elementos
+lista = [1, 2, 3, "quatro", 5.0]
+print("List:", lista, "| Tipo:", type(lista))
 
-#Exemplo de condicional - https://www.w3schools.com/python/python_conditions.asp
+# Tuplas: coleção ordenada e imutável
+tupla = (1, 2, 3)
+print("Tuple:", tupla, "| Tipo:", type(tupla))
 
-if exemplo == 'efrem':
-    exemplo = exemplo + " maranhão"
-elif exemplo == 'efrem_':
-    exemplo = exemplo + ' filho'
+# Dicionários: coleção de pares chave-valor
+dicionario = {"nome": "efrem", "idade": 30}
+print("Dictionary:", dicionario, "| Tipo:", type(dicionario))
+
+# Sets: coleção de elementos únicos (não ordenada)
+conjunto = {1, 2, 3, 2, 1}
+print("Set:", conjunto, "| Tipo:", type(conjunto))
+
+# ========================================
+# Operações e conversão de tipos
+# ========================================
+
+# Exemplo de concatenação de string com número (necessário converter o número para string)
+soma = num_int + num_float
+print("Soma (num_int + num_float):", soma, "| Tipo:", type(soma))
+
+# ========================================
+# Estrutura condicional (if, elif, else)
+# ========================================
+
+# Verifica se a variável 'texto' possui um valor específico e concatena com uma mensagem.
+if texto == "Olá, Python!":
+    resultado = texto + " é incrível!"
+elif texto == "Olá":
+    resultado = texto + ", mundo!"
 else:
-    exemplo = exemplo + "-"
-    if isinstance(exemplo, basestring):
-        exemplo = exemplo + " maranhão filho"
+    resultado = texto + " - valor não esperado."
+print("Resultado condicional:", resultado)
 
-"""
-if(exemplo == 'efrem'){
-  exemplo = exemplo + ' maranhao';
-} else {
-  exemplo = exemplo + "-";
+# ========================================
+# Estruturas de repetição (loops)
+# ========================================
 
-if(parseInt(exemplo,10)) {
-    exemplo = exemplo + ' silva';
-  }
+# Loop sobre uma lista: itera e imprime cada elemento da lista 'lista'
+print("Iterando sobre a lista:")
+for item in lista:
+    print("Item:", item)
+
+# Loop utilizando 'range': gera uma sequência de números e imprime cada um dividido por 10
+print("Iterando com range:")
+for i in range(10, 100, 6):  # Inicia em 10, vai até 100, incrementando de 6 em 6
+    print("Valor:", i / 10)
+
+# ========================================
+# Consumo de API Externa: Google Maps Places API
+# ========================================
+
+# Monta a URL da API e define os parâmetros para a requisição.
+# NOTA: Substitua '[API-KEY]' pela sua chave de API válida.
+url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+params = {
+    "location": "-7.136722,-34.845641",  # Coordenadas de localização
+    "radius": 20000,                     # Raio de busca (em metros)
+    "types": "restaurant",               # Tipo de estabelecimento a ser buscado
+    "key": "[API-KEY]"                   # Chave da API
 }
-"""
 
-# Exemplo de loop - https://www.w3schools.com/python/python_for_loops.asp
-efrems = ["efrem", "efrem_", "efrem+"]
-for x in efrems:
-  print(x)
+# Envia a requisição GET para a API com os parâmetros especificados
+response = requests.get(url, params=params)
 
-for i in range(10,1000,6): 
-    j = float(i)
-    print(j/10)
+# Converte a resposta para o formato JSON
+data = response.json()
 
-"""
-  for (var i = 1; i < 100; i = i + .6) {
-    if (Math.floor(i) == Math.round(i)) {
-      //Logger.log('o round é ' + Math.round(i) + ' e eu contei '+ i);
-    } else {
-      //Logger.log('o round é ' + Math.round(i) + ' e eu não contei o decimal' + i);
-    }
-  }
-"""
+# Exibe os restaurantes encontrados (localização)
+print("Restaurantes encontrados:")
+for place in data.get('results', []):
+    print("Local:", place.get('vicinity'))
 
-# Exemplo API Externa - https://medium.com/quick-code/absolute-beginners-guide-to-slaying-apis-using-python-7b380dc82236 
-# Para o Google Maps API - https://console.developers.google.com/apis/credentials?project=universidade-agora
-request = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=[API-KEY]')
-data = request.json()
-
-for place in data['results']:
-    print(place['vicinity'])
-    
-"""request = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=[API-KEY]')
-data = request.json()
-
-print(data)
-
-for place in data:
-    print(place)
-request = requests.get('http://api.open-notify.org')
-print(request.text)
-"""
-
-"""
-  var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-7.136722,-34.845641&radius=20000&types=restaurant&key=[YOUR-KEY]';
-  var response = UrlFetchApp.fetch(url);
-  var json = response.getContentText();
-  var data = JSON.parse(json);
-  
-  //Logger.log(data.results.length);
-  
-  for(var a = 0; a<data.results.length; a++){
-    //Logger.log(data.results[0].vicinity);
-    Logger.log('O lugar se chama: '+data.results[a].name + 
-    ' \ne tem coordenadas (latitude,longitude) em: '+ 
-    data.results[a].geometry.location.lat+','+data.results[a].geometry.location.lng);
-  }
-"""
-
-#parsed = json.loads(data)
+# Exibe o JSON completo, formatado para melhor visualização
+print("Dados JSON formatados:")
 print(json.dumps(data, indent=4, sort_keys=True))
