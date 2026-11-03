@@ -1,4 +1,4 @@
-!pip install PyPDF2==2.12.1
+# pip install PyPDF2==2.12.1
 
 import os
 from PyPDF2 import PdfReader, PdfWriter
